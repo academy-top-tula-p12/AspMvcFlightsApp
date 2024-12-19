@@ -1,0 +1,38 @@
+﻿@model IEnumerable<AspMvcFlightsApp.Models.DataCity>?
+<h1>Панель управления городами</h1>
+
+<div>
+    <a class="btn-primary" asp-area="Dashboard" asp-controller="City" asp-action="Create">Создать новый</a>
+</div>
+
+<table class="table-striped">
+    <thead>
+        <tr>
+            <th>Назвние</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model is not null)
+        {
+            @foreach (var city in Model)
+            {
+                <tr>
+                    <td>@city.Title</td>
+                    <td>
+                        <a class="btn-secondary" asp-area="Dashboard" asp-controller="City" asp-action="Edit" asp-route-id="@city.Id">Редактировать</a>
+                    </td>
+                    <td>
+                        <form asp-area="Dashboard" asp-controller="City" asp-action="Delete" asp-route-id="@city.Id">
+                            <input class="btn-danger" value="Удалить" />
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        
+       
+    </tbody>
+    
+</table>
