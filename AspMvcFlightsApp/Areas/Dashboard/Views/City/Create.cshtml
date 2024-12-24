@@ -1,0 +1,12 @@
+﻿@model AspMvcFlightsApp.Models.DataCity
+
+<h2>Новый город:</h2>
+<form asp-action="create" asp-controller="city" method="post">
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Название:</label>
+        <input asp-for="Title" type="text" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <input class="btn btn-success" type="submit" />
+    </div>
+</form>

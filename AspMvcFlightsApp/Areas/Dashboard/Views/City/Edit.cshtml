@@ -1,0 +1,12 @@
+﻿@model AspMvcFlightsApp.Models.DataCity
+
+<h2>Редактирование города:</h2>
+<form asp-action="edit" asp-controller="city" method="post" asp-route-id="@Model.Id">
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Название:</label>
+        <input asp-for="Title" type="text" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <input class="btn btn-success" type="submit" />
+    </div>
+</form>
