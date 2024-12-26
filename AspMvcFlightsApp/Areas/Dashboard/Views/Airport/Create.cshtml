@@ -1,19 +1,30 @@
 ﻿@model AspMvcFlightsApp.Models.DataAirport
 
+<style>
+    .field-validation-error {
+        color: darkred;
+    }
+</style>
+
 <h2>Новый аэропорт:</h2>
 <form asp-action="create" asp-controller="airport" method="post">
+    <div asp-validation-summary="All"></div>
+
     <div class="mb-3">
-        <label asp-for="Title" class="form-label">Название:</label>
+        <label asp-for="Title" class="form-label"></label>
         <input asp-for="Title" type="text" class="form-control" />
+        <span asp-validation-for="Title" />
     </div>
     <div class="mb-3">
         <label asp-for="CityId" class="form-label">Город:</label>
-        <select asp-for="CityId" class="form-select" aria-label="Пример выбора по умолчанию">
+        <select asp-for="CityId" class="form-select">
             @foreach(DataCity city in ViewBag.cities)
             {
                 <option value="@city.Id">@city.Title</option>
             }
         </select>
+        <span asp-validation-for="CityId" />
+        <span asp-validation-for="CityId" />
     </div>
     <div class="mb-3">
         <input class="btn btn-success" type="submit" />

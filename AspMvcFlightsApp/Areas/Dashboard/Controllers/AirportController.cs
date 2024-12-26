@@ -21,7 +21,11 @@ namespace AspMvcFlightsApp.Areas.Dashboard.Controllers
 
         public IActionResult Create()
         {
-            ViewBag.cities = dataContext?.Cities?.ToList();
+            var cities = dataContext?.Cities?.ToList();
+            cities.Insert(0, new() { Id = 0, Title = "" });
+            ViewBag.cities = cities;
+
+
             return View();
         }
 
@@ -72,6 +76,15 @@ namespace AspMvcFlightsApp.Areas.Dashboard.Controllers
                 }
             }
             return NotFound();
+        }
+
+        public IActionResult CheckCity(int id)
+        {
+            if(id > 0)
+            {
+                return Json(true);
+            }
+            return Json(false);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AspMvcFlightsApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace AspMvcFlightsApp.Areas.Dashboard.Controllers
 {
@@ -25,9 +26,18 @@ namespace AspMvcFlightsApp.Areas.Dashboard.Controllers
         [HttpPost]
         public IActionResult Create(DataCity city)
         {
-            dataContext?.Cities?.Add(city);
-            dataContext?.SaveChanges();
-            return RedirectToAction("Index");
+            if(ModelState.IsValid)
+            {
+                dataContext?.Cities?.Add(city);
+                dataContext?.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            //
+            string errorMessage = "";
+            foreach (var prop in ModelState)
+                if (prop.Value.ValidationState == ModelValidationState.Invalid)
+                    errorMessage += $"Prop {prop.Key}: {prop.Value.Errors[0].ErrorMessage}\n";
+            return Content($"Не задана необходимая информация:\n{errorMessage}");
         }
 
         public IActionResult Edit(int? id)
@@ -64,6 +74,16 @@ namespace AspMvcFlightsApp.Areas.Dashboard.Controllers
                 }
             }
             return NotFound();
+        }
+
+        [AcceptVerbs("Get", "Post")]
+        public IActionResult CheckTitle(string title)
+        {
+            if(dataContext.Cities!.Any(c => c.Title == title))
+            {
+                return Json(false);
+            }
+            return Json(true);
         }
     }
 }
