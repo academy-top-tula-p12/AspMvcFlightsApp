@@ -1,10 +1,14 @@
 using System.Diagnostics;
 using AspMvcFlightsApp.Models;
+using AspMvcFlightsApp.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace AspMvcFlightsApp.Controllers
 {
+
+    
     public class HomeController : Controller
     {
         DataModelDbContext dataContext;
@@ -13,6 +17,8 @@ namespace AspMvcFlightsApp.Controllers
         {
             this.dataContext = dataContext;
         }
+
+        //[SimpleResourceFilter]
         public IActionResult Index(AirportSortType sortType = AirportSortType.TitleAsc)
         {
             IQueryable<DataAirport> airports = dataContext.Airports

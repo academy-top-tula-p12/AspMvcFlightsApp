@@ -1,5 +1,6 @@
 using AspMvcFlightsApp.Data;
 using AspMvcFlightsApp.Models;
+using AspMvcFlightsApp.Filters;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
@@ -14,6 +15,13 @@ namespace AspMvcFlightsApp
 
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+            builder.Services.AddMvc(option =>
+            {
+                //option.Filters.Add(typeof(SimpleResourceFilter));
+                //option.Filters.Add(new SimpleResourceFilter());
+                option.Filters.Add<SimpleResourceFilter>();
+            });
 
             builder.Services.AddDbContext<DataModelDbContext>(options =>
                 options.UseSqlServer(connectionString));
